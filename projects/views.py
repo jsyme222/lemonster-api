@@ -1,8 +1,8 @@
-from projects.serializers import ProjectSerializer
+from projects.serializers import ChipTagSerializer, ProjectSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from projects.models import Project
+from projects.models import ChipTag, Project
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -26,3 +26,10 @@ class ProjectView(APIView):
         all_projects = Project.objects.all()
         serialized_projects = ProjectSerializer(all_projects, many=True)
         return Response(serialized_projects.data, status=status.HTTP_200_OK)
+
+
+class ChipTagView(APIView):
+    def get(self, request, *args, **kwargs):
+        tags = ChipTag.objects.all()
+        serialized_tags = ChipTagSerializer(tags, many=True)
+        return Response(serialized_tags.data, status=status.HTTP_200_OK)
