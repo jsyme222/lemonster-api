@@ -23,13 +23,13 @@ class ProjectView(APIView):
                 return Response(project.data, status=status.HTTP_200_OK)
             else:
                 return Response({"error": f'no project {slug}'}, status=status.HTTP_200_OK)
-        all_projects = Project.objects.all()
+        all_projects = Project.objects.all().order_by("-rating")
         serialized_projects = ProjectSerializer(all_projects, many=True)
         return Response(serialized_projects.data, status=status.HTTP_200_OK)
 
 
 class ChipTagView(APIView):
     def get(self, request, *args, **kwargs):
-        tags = ChipTag.objects.all()
+        tags = ChipTag.objects.all().order_by("title")
         serialized_tags = ChipTagSerializer(tags, many=True)
         return Response(serialized_tags.data, status=status.HTTP_200_OK)

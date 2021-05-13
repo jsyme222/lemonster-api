@@ -19,5 +19,4 @@ class BlogPostView(APIView):
                 return Response({"error": f'no post {id}'}, status=status.HTTP_204_NO_CONTENT)
         all_posts = BlogPost.objects.all()
         serialized_posts = BlogPostSerializer(all_posts, many=True)
-        print(serialized_posts.data)
         return Response(serialized_posts.data, status=status.HTTP_200_OK)
