@@ -54,3 +54,7 @@ class ContactMail(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name} on {self.created_on}'
+
+    # def save(self, *args, **kwargs):
+    #     self.send_mail()
+    #     return super(ContactMail, self).save(*args, **kwargs)
