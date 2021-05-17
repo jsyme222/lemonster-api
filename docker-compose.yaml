@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - 8181:80
+    volumes:
+      - static_volume:/home/jsyme/lemonster-api/static
+    depends_on:
+      - web
+    restart: "on-failure"
+  web:
+    build: . #build the image for the web service from the dockerfile in parent directory
+    command: sh -c "python manage.py makemigrations &&
+                    python manage.py migrate &&
+                    python manage.py collectstatic --no-input &&
+                    gunicorn api.wsgi:application --bind 0.0.0.0:8181"
+    volumes:
+      - .:/home/jsyme/lemonster-api:rw # map data and files from parent directory in host to microservice directory in docker containe
+      - static_volume:/home/jsyme/lemonster-api/static
+  
+    image: lemonster-api
+
+    expose:
+      - 8181
+    restart: "on-failure"
+
+
+
+volumes:
+  static_volume:
