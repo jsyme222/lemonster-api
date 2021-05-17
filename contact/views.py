@@ -1,3 +1,4 @@
+from typing import Mapping
 from contact.serializers import ContactMailSerializer
 from contact.models import ContactMail
 from django.shortcuts import render
@@ -8,7 +9,7 @@ import smtplib
 import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from api.settings import SMTP_PASS, SMTP_EMAIL
+from api.settings import SMTP_PASS, SMTP_EMAIL, BG_COLORS
 
 
 def check_key(obj, key, callback_value=""):
@@ -64,19 +65,37 @@ class ContactMailView(APIView):
         context = ssl.create_default_context()
 
         with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-            server.login(to_address, password)
-            server.sendmail(
-                from_address, to_address, html_message.as_string()
-            )
+
+            try:
+                server.login(to_address, password)
+                server.sendmail(
+                    from_address, to_address, html_message.as_string()
+                )
+                print(BG_COLORS["OKGREEN"], f'mail sent to {to_address}')
+            except Exception as e:
+                print(BG_COLORS["FAIL"],
+                      "ERROR: smpt unable to login to server.")
+                return False
             return True
 
     def post(self, request, *args, **kwargs):
+        def init_kwargs(model, arg_dict):
+            model_fields = [f.name for f in model._meta.get_fields()]
+            return {k: v for k, v in arg_dict.items() if k in model_fields}
+
         mail = request.data
         new_mail = {x: check_key(mail, x) for x in mail.keys()}
+        print(mail)
         if "email" in new_mail.keys():
+            new_mail = init_kwargs(ContactMail, new_mail)
             mailObj = ContactMail.objects.create(**new_mail)
             serialized_mail = ContactMailSerializer(mailObj)
-            self.send_mail(serialized_mail.data)
+            mail_sent = self.send_mail(serialized_mail.data)
+            if not mail_sent:
+                return Response(
+                    {"error": "smtp"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
         else:
             return Response({"error": "no email provided"}, status=status.HTTP_406_NOT_ACCEPTABLE)
         return Response(serialized_mail.data, status=status.HTTP_200_OK)
