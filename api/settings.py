@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'blog',
     'projects',
     'contact',
-    'rest_framework'
+    'rest_framework',
+    "graphene_django",
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SMTP Settings
 SMTP_PASS = env("SMTP_PASS")
 SMTP_EMAIL = env("SMTP_EMAIL")
+
+GRAPHENE = {
+    "SCHEMA": "api.schema.schema"
+}
