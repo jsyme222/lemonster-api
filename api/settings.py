@@ -126,6 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = Path(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(BASE_DIR, 'media')
 
@@ -138,6 +139,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SMTP_PASS = env("SMTP_PASS")
 SMTP_EMAIL = env("SMTP_EMAIL")
 
+<<<<<<< HEAD
 GRAPHENE = {
     "SCHEMA": "api.schema.schema"
+=======
+
+#  CLI Settings
+BG_COLORS = {
+    "HEADER": '\033[95m',
+    "OKBLUE": '\033[94m',
+    "OKCYAN": '\033[96m',
+    "OKGREEN": '\033[92m',
+    "WARNING": '\033[93m',
+    "FAIL": '\033[91m',
+    "ENDC": '\033[0m',
+    "BOLD": '\033[1m',
+    "UNDERLINE": '\033[4m'
+>>>>>>> 867d448151e3299ad37dbfa071c4530921a25986
 }
