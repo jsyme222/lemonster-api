@@ -139,10 +139,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SMTP_PASS = env("SMTP_PASS")
 SMTP_EMAIL = env("SMTP_EMAIL")
 
-<<<<<<< HEAD
 GRAPHENE = {
     "SCHEMA": "api.schema.schema"
-=======
+}
 
 #  CLI Settings
 BG_COLORS = {
@@ -155,5 +154,4 @@ BG_COLORS = {
     "ENDC": '\033[0m',
     "BOLD": '\033[1m',
     "UNDERLINE": '\033[4m'
->>>>>>> 867d448151e3299ad37dbfa071c4530921a25986
 }
