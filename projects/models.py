@@ -1,19 +1,7 @@
-import os
+from tags.models import Tag
 from django.db import models
-from django.db.models.enums import Choices
 from django.utils import timezone
 from django.utils.text import slugify
-
-
-class ChipTag(models.Model):
-    title = models.CharField(
-        max_length=250,
-        blank=False,
-        default=""
-    )
-
-    def __str__(self) -> str:
-        return self.title
 
 
 class Project(models.Model):
@@ -69,7 +57,7 @@ class Project(models.Model):
         null=True
     )
     core_deps = models.ManyToManyField(
-        ChipTag,
+        Tag,
         blank=True
     )
 

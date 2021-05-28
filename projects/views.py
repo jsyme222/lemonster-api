@@ -1,8 +1,10 @@
-from projects.serializers import ChipTagSerializer, ProjectListSerializer
+from tags.models import BlogTag
+from tags.serializers import BlogTagSerializer
+from projects.serializers import ProjectListSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from projects.models import ChipTag, Project
+from projects.models import Project
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -30,6 +32,6 @@ class ProjectView(APIView):
 
 class ChipTagView(APIView):
     def get(self, request, *args, **kwargs):
-        tags = ChipTag.objects.all().order_by("title")
-        serialized_tags = ChipTagSerializer(tags, many=True)
+        tags = BlogTag.objects.all().order_by("title")
+        serialized_tags = BlogTagSerializer(tags, many=True)
         return Response(serialized_tags.data, status=status.HTTP_200_OK)

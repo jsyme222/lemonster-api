@@ -1,4 +1,4 @@
-from projects.models import ChipTag
+from tags.models import BlogTag
 from django.db import models
 from django.utils import timezone
 import uuid
@@ -29,7 +29,7 @@ class BlogPost(models.Model):
         null=True
     )
     tags = models.ManyToManyField(
-        ChipTag,
+        BlogTag,
         related_name="blog_tags"
     )
 

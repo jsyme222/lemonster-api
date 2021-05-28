@@ -1,16 +1,7 @@
-from django.db import models
-from django.db.models import fields
 from rest_framework.serializers import ModelSerializer
 
-from projects.models import ChipTag, Project
-
-
-class ChipTagSerializer(ModelSerializer):
-    class Meta:
-        model = ChipTag
-        fields = [
-            "title"
-        ]
+from projects.models import Project
+from tags.serializers import BlogTagSerializer
 
 
 class ProjectSerializer(ModelSerializer):
@@ -18,7 +9,7 @@ class ProjectSerializer(ModelSerializer):
         model = Project
         fields = "__all__"
 
-    core_deps = ChipTagSerializer(many=True)
+    core_deps = BlogTagSerializer(many=True)
 
 
 class ProjectListSerializer(ModelSerializer):
@@ -27,4 +18,4 @@ class ProjectListSerializer(ModelSerializer):
         fields = ("id", "slug", "title", "created_on", "description", "content",
                   "core_deps", "backgroundImage", "backgroundImageUpload", "url", "repo", "rating")
 
-    core_deps = ChipTagSerializer(many=True)
+    core_deps = BlogTagSerializer(many=True)
