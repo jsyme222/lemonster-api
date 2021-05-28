@@ -73,10 +73,8 @@ class Project(models.Model):
         blank=True
     )
 
-
     def __str__(self) -> str:
         return self.title
-
 
     def save(self, *args, **kwargs):
         slug = slugify(self.title)

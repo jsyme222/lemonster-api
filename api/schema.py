@@ -14,7 +14,8 @@ class TagType(DjangoObjectType):
 class ProjectType(DjangoObjectType):
     class Meta:
         model = Project
-        fields = "__all__"
+        fields = ("id", "slug", "title", "created_on", "description", "content",
+                  "core_deps", "backgroundImage", "backgroundImageUpload", "url", "repo", "rating")
 
 
 class BlogPostType(DjangoObjectType):

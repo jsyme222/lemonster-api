@@ -19,3 +19,12 @@ class ProjectSerializer(ModelSerializer):
         fields = "__all__"
 
     core_deps = ChipTagSerializer(many=True)
+
+
+class ProjectListSerializer(ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ("id", "slug", "title", "created_on", "description", "content",
+                  "core_deps", "backgroundImage", "backgroundImageUpload", "url", "repo", "rating")
+
+    core_deps = ChipTagSerializer(many=True)

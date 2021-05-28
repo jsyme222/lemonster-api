@@ -1,4 +1,4 @@
-from projects.serializers import ChipTagSerializer, ProjectSerializer
+from projects.serializers import ChipTagSerializer, ProjectListSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -19,12 +19,12 @@ class ProjectView(APIView):
         slug = request.GET["slug"] if "slug" in request.GET.keys() else None
         if slug:
             if project := self.get_project(slug):
-                project = ProjectSerializer(project)
+                project = ProjectListSerializer(project)
                 return Response(project.data, status=status.HTTP_200_OK)
             else:
                 return Response({"error": f'no project {slug}'}, status=status.HTTP_200_OK)
         all_projects = Project.objects.all().order_by("-rating")
-        serialized_projects = ProjectSerializer(all_projects, many=True)
+        serialized_projects = ProjectListSerializer(all_projects, many=True)
         return Response(serialized_projects.data, status=status.HTTP_200_OK)
 
 
