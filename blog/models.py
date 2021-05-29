@@ -1,6 +1,8 @@
+from blog.signals import set_blog_tag_usage
 from tags.models import BlogTag
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import m2m_changed
 import uuid
 
 
@@ -35,3 +37,7 @@ class BlogPost(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+m2m_changed.connect(set_blog_tag_usage, sender=BlogPost.tags.through,
+                    dispatch_uid="blogpost.tags.change")

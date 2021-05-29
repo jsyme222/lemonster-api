@@ -1,5 +1,3 @@
-from tags.models import BlogTag
-from tags.serializers import BlogTagSerializer
 from projects.serializers import ProjectListSerializer
 from rest_framework import status
 from rest_framework.response import Response
@@ -28,10 +26,3 @@ class ProjectView(APIView):
         all_projects = Project.objects.all().order_by("-rating")
         serialized_projects = ProjectListSerializer(all_projects, many=True)
         return Response(serialized_projects.data, status=status.HTTP_200_OK)
-
-
-class ChipTagView(APIView):
-    def get(self, request, *args, **kwargs):
-        tags = BlogTag.objects.all().order_by("title")
-        serialized_tags = BlogTagSerializer(tags, many=True)
-        return Response(serialized_tags.data, status=status.HTTP_200_OK)

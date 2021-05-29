@@ -1,3 +1,21 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from tags.models import BlogTag
+from tags.models import BlogTag
+from tags.serializers import BlogTagSerializer
+from rest_framework import status
+from rest_framework.response import Response
 
-# Create your views here.
+
+
+class BlogTagView(APIView):
+    def get(self, request, *args, **kwargs):
+        all = False
+        try:
+            all = request.GET["all"]
+        except KeyError:
+            pass
+        tags = BlogTag.objects.order_by("title") 
+        if not all:
+            tags = tags.filter(usage_count__gt=0)
+        serialized_tags = BlogTagSerializer(tags, many=True)
+        return Response(serialized_tags.data, status=status.HTTP_200_OK)

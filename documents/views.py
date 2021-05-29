@@ -2,6 +2,7 @@ import os
 
 from django.conf import settings
 from django.core.validators import URLValidator, ValidationError
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponse
 from django.views.generic import View
 
@@ -10,7 +11,7 @@ import requests
 from django_encrypted_filefield.crypt import Cryptographer
 
 
-class FetchView(View):    
+class FetchView(View):
     """
     This is a generic, insecure view that effectively undoes any security made
     available via this module.  To make it useful, you have to subclass it and
@@ -43,14 +44,14 @@ class FetchView(View):
             raise Http404
 
         if self._is_url(path):
-
             content = requests.get(path, stream=True).raw.read()
 
         else:
 
             # Normalise the path to strip out naughty attempts
             path = os.path.normpath(path).replace(
-                settings.MEDIA_URL.lstrip("/"), str(settings.MEDIA_ROOT).lstrip("/") + "/", 1
+                settings.MEDIA_URL.lstrip(
+                    "/"), str(settings.MEDIA_ROOT).lstrip("/") + "/", 1
             )
             print("PATH: ", path)
 
@@ -77,3 +78,10 @@ class FetchView(View):
             return True
         except ValidationError:
             return False
+
+
+class FileFetchView(LoginRequiredMixin, FetchView):
+    """
+    Proxy view to set up Login Auth Mixin
+    """
+    pass

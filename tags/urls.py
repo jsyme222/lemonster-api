@@ -1,8 +1,8 @@
 """projects URL Configuration
 """
-from projects.views import ProjectView
+from tags.views import BlogTagView
 from django.urls import path
 
 urlpatterns = [
-    path("", ProjectView.as_view()),
+    path("blog", BlogTagView.as_view()),
 ]

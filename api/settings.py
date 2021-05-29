@@ -35,6 +35,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -165,3 +167,7 @@ BG_COLORS = {
 # Cryptography settings for encrypted Documents/Notes
 CRYPTOGRAPHY_SALT = env("CRYPTOGRAPHY_SALT")
 CRYPTOGRAPHY_KEY = env("CRYPTOGRAPHY_KEY")
+
+# DJANGO-ADMIN-INTERFACE
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']

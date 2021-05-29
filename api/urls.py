@@ -15,6 +15,7 @@ urlpatterns = [
     path(f'v{VERSION}/blog/', include('blog.urls')),
     path(f'v{VERSION}/contact/', include('contact.urls')),
     path(f'v{VERSION}/documents/', include('documents.urls')),
+    path(f'v{VERSION}/tags/', include('tags.urls')),
     path(f'v{VERSION}/gql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ]
 if DEBUG:
