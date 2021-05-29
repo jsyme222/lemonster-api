@@ -1,7 +1,9 @@
+from api.utils.filecleanup import image_file_cleanup
 from tags.models import Tag
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from django.db.models.signals import post_delete
 
 
 class Project(models.Model):
@@ -68,3 +70,7 @@ class Project(models.Model):
         slug = slugify(self.title)
         self.slug = slug
         return super(Project, self).save(*args, **kwargs)
+
+
+post_delete.connect(image_file_cleanup, sender=Project,
+                    dispatch_uid="projects.image.file_cleanup")

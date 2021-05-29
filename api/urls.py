@@ -7,15 +7,16 @@ from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 
-from api import settings
+from api.settings import DEBUG, MEDIA_ROOT, MEDIA_URL, VERSION
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('projects/', include('projects.urls')),
-    path("blog/", include('blog.urls')),
-    path("contact/", include('contact.urls')),
-    path("gql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path(f'v{VERSION}/projects/', include('projects.urls')),
+    path(f'v{VERSION}/blog/', include('blog.urls')),
+    path(f'v{VERSION}/contact/', include('contact.urls')),
+    path(f'v{VERSION}/documents/', include('documents.urls')),
+    path(f'v{VERSION}/gql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+if DEBUG:
+    urlpatterns += static(MEDIA_URL,
+                          document_root=MEDIA_ROOT)

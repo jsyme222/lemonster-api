@@ -17,15 +17,17 @@ ENV PYTHONUNBUFFERED 1
 
 # install psycopg2 dependencies
 RUN apk update \
-    && apk add --virtual build-deps gcc python3-dev musl-dev \
-    && apk add postgresql-dev gcc python3-dev musl-dev zlib-dev jpeg-dev gcc \
+    && apk add --virtual build-deps gcc python3-dev musl-dev libffi-dev openssl-dev \
+    && apk add postgresql-dev gcc python3-dev musl-dev zlib-dev jpeg-dev gcc cargo\
     && apk del build-deps \
     && apk --no-cache add musl-dev linux-headers g++
 # install dependencies
 RUN pip install --upgrade pip
 # copy project
 COPY . $MICRO_SERVICE
+
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt gunicorn
 COPY ./docker-entrypoint.sh $MICRO_SERVICE
 
-CMD ["echo "running"]
+CMD ["/bin/bash"]

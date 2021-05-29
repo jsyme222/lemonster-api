@@ -20,6 +20,9 @@ environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# App version
+VERSION = env('VERSION')
+
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -158,3 +161,7 @@ BG_COLORS = {
     "BOLD": '\033[1m',
     "UNDERLINE": '\033[4m'
 }
+
+# Cryptography settings for encrypted Documents/Notes
+CRYPTOGRAPHY_SALT = env("CRYPTOGRAPHY_SALT")
+CRYPTOGRAPHY_KEY = env("CRYPTOGRAPHY_KEY")
