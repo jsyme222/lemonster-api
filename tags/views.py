@@ -9,13 +9,8 @@ from rest_framework.response import Response
 
 class BlogTagView(APIView):
     def get(self, request, *args, **kwargs):
-        all = False
-        try:
-            all = request.GET["all"]
-        except KeyError:
-            pass
-        tags = BlogTag.objects.order_by("title") 
-        if not all:
+        tags = BlogTag.objects.order_by("title")
+        if "all" not in request.GET.keys():
             tags = tags.filter(usage_count__gt=0)
         serialized_tags = BlogTagSerializer(tags, many=True)
         return Response(serialized_tags.data, status=status.HTTP_200_OK)
