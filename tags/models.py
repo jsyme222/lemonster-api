@@ -21,6 +21,9 @@ class Tag(AbstractTag):
 
 
 class BlogTag(Tag):
+    class Meta:
+        app_label = "blog"
+
     usage_count = models.PositiveIntegerField(default=0)
 
     def set_usage(self, value: bool = False) -> int:

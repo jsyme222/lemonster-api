@@ -2,6 +2,7 @@
 Django settings for api project.
 """
 
+from api.plugin_configs.jazzmin import JAZZMIN_SETTINGS as JAZZMIN
 from pathlib import Path
 import environ
 
@@ -81,10 +82,19 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("POSTGRES_DB"),
+        'USER': env("POSTGRES_USER"),
+        'PASSWORD': env("POSTGRES_PASS"),
+        'HOST': 'db',
+        'PORT': '5432',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
 
 
@@ -119,10 +129,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = Path(BASE_DIR, 'static')
@@ -159,3 +165,5 @@ BG_COLORS = {
 CRYPTOGRAPHY_SALT = env("CRYPTOGRAPHY_SALT")
 CRYPTOGRAPHY_KEY = env("CRYPTOGRAPHY_KEY")
 
+JAZZMIN_SETTINGS = JAZZMIN
+USE_I18N = True

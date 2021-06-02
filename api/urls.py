@@ -11,6 +11,7 @@ from api.settings import DEBUG, MEDIA_ROOT, MEDIA_URL, VERSION
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
     path(f'v{VERSION}/projects/', include('projects.urls')),
     path(f'v{VERSION}/blog/', include('blog.urls')),
     path(f'v{VERSION}/contact/', include('contact.urls')),

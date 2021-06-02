@@ -1,0 +1,45 @@
+version: "3.7"
+
+services:
+  db:
+    container_name: "postgres"
+    image: postgres:13
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - prod.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  nginx:
+    container_name: "nginx"
+    build: ./nginx
+    ports:
+      - 8181:80
+    volumes:
+      - static_volume:/lemonster-api/static
+    depends_on:
+      - web
+    restart: "on-failure"
+  web:
+    container_name: "api"
+    build: 
+      context: .
+      dockerfile: prod.Dockerfile
+    command: sh -c "python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py collectstatic --no-input &&
+      gunicorn api.wsgi:application --bind 0.0.0.0:8181"
+    volumes:
+      - .:/lemonster-api:rw # map data and files from parent directory in host to microservice directory in docker containe
+      - static_volume:/lemonster-api/static
+    environment: 
+      - DEBUG=False
+    expose:
+      - 8181
+    restart: "on-failure"
+
+volumes:
+  static_volume:
