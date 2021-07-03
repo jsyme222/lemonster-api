@@ -2,7 +2,7 @@
 Django settings for api project.
 """
 
-from api.plugin_configs.jazzmin import JAZZMIN_SETTINGS as JAZZMIN
+from api.plugin_configs.jazzmin.jazzmin import SETTINGS, UI_TWEAKS
 from pathlib import Path
 import environ
 
@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'documents',
     'clients',
     'projects',
+    'proposals',
     'contact',
     'rest_framework',
     "graphene_django",
+    'markdownfield'
 ]
 
 MIDDLEWARE = [
@@ -132,6 +134,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = Path(BASE_DIR, 'static')
+STATICFILES_DIRS = [Path(BASE_DIR, 'api/static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(BASE_DIR, 'media')
 
@@ -165,5 +168,8 @@ BG_COLORS = {
 CRYPTOGRAPHY_SALT = env("CRYPTOGRAPHY_SALT")
 CRYPTOGRAPHY_KEY = env("CRYPTOGRAPHY_KEY")
 
-JAZZMIN_SETTINGS = JAZZMIN
+JAZZMIN_SETTINGS = SETTINGS
+JAZZMIN_UI_TWEAKS = UI_TWEAKS
 USE_I18N = True
+
+SITE_URL = "localhost"

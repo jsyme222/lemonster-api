@@ -2,8 +2,8 @@ version: "3.7"
    
 services:
   db:
-    container_name: "postgres"
-    image: postgres:13
+    container_name: "lemonster_postgres"
+    image: postgres:13-alpine
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
@@ -18,7 +18,7 @@ services:
     ports: 
       - "5432:5432"
   web:
-    container_name: "api"
+    container_name: "lemonster_api"
     build: 
       context: .
       dockerfile: dev.Dockerfile
@@ -29,6 +29,3 @@ services:
       - "8000:8000"
     depends_on:
       - db
-  # react:
-  #   container_name: "react"
-  #   build: react.Dockerfile

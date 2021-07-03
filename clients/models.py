@@ -13,7 +13,9 @@ class Client(models.Model):
     billing_address = models.CharField(max_length=250, default="")
     shipping_address = models.CharField(max_length=250, default="")
     website = models.URLField(max_length=250, default="")
-    
+
+    projects = models.ManyToManyField(Project)
+    documents = models.ManyToManyField(Document)
 
     def __str__(self) -> str:
-        return self.name
+        return self.display_name

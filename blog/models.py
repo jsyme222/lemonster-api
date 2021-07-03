@@ -23,7 +23,8 @@ class BlogPost(models.Model):
         max_length=250,
         blank=True,
         default="",
-        null=True
+        null=True,
+        help_text="http://..."
     )
     content = models.TextField(
         blank=True,
@@ -32,7 +33,8 @@ class BlogPost(models.Model):
     )
     tags = models.ManyToManyField(
         BlogTag,
-        related_name="blog_tags"
+        related_name="blog_tags",
+        blank=True
     )
 
     def __str__(self) -> str:

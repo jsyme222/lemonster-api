@@ -5,7 +5,7 @@ services:
     container_name: "postgres"
     image: postgres:13
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./postgres_data:/var/lib/postgresql/data
     environment:
       - prod.env
     healthcheck:

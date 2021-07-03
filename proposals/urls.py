@@ -1,4 +1,4 @@
-"""gov_data URL Configuration
+"""proposals URL Configuration
 """
 from django.urls import path
 
