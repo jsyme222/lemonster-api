@@ -1,3 +1,4 @@
+import uuid
 from api.utils.filecleanup import image_file_cleanup
 from tags.models import Tag
 from documents.models import Document
@@ -79,13 +80,42 @@ class Project(models.Model):
 
 
 class ClientContentWritten(models.Model):
-    question = models.CharField(max_length=1200, default="")
-    answer = models.TextField(default="")
+    class Meta:
+        verbose_name_plural = "Written Content"
+    question = models.CharField(
+        max_length=1200, default="", blank=True, null=True)
+    answer = models.TextField(default="", blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.question
+
+
+class ClientContentDocument(models.Model):
+    class Meta:
+        verbose_name_plural = "Client Documents"
+
+    question = models.CharField(
+        max_length=1200, default="", blank=True, null=True)
+    answer = models.ForeignKey(
+        Document, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.question
 
 
 class ClientSuppliedContent(models.Model):
+    class Meta:
+        verbose_name_plural = "Client Supplied Info"
+
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
-    written_content = models.ManyToManyField(ClientContentWritten)
+    content_written = models.ManyToManyField(ClientContentWritten, blank=True)
+    content_documents = models.ManyToManyField(
+        ClientContentDocument, blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.project} - {self.id}'
 
 
 post_delete.connect(image_file_cleanup, sender=Project,

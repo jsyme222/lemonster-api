@@ -108,7 +108,20 @@ SETTINGS = {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-        "blog_post": "fas fa-plus",
+        "blog.BlogPost": "fas fa-rss",
+        "tags.BlogTags": "fas fa-tags",
+        "tags.Tag": "fas fa-tags",
+        "clients.Client": "fas fa-users",
+        "contact.ContactMail": "fas fa-envelope",
+        "documents.Document": "fas fa-file-alt",
+        "documents.PrivateDocument": "fas fa-key",
+        "documents.DocumentType": "fas fa-font",
+        "projects.ClientContentWritten": "fas fa-user-edit",
+        "projects.ClientSuppliedContent": "fas fa-people-arrows",
+        "projects.ClientContentDocument": "fas fa-file-import",
+        "projects.Project": "fas fa-project-diagram",
+        "proposals.Proposal": "fas fa-fire",
+        "proposals.ProposalTheme": "fas fa-paint-brush",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -127,7 +140,7 @@ SETTINGS = {
     "custom_css": None,
     "custom_js": None,
     # Whether to show the UI customizer on the sidebar
-    "show_ui_builder": True,
+    "show_ui_builder": False,
 
     ###############
     # Change view #
@@ -142,7 +155,7 @@ SETTINGS = {
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
     # Add a language dropdown into the admin
-    "language_chooser": True,
+    "language_chooser": False,
 }
 
 UI_TWEAKS = {

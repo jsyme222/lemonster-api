@@ -1,4 +1,4 @@
-from projects.models import Project, ClientSuppliedContent, ClientContentWritten
+from projects.models import ClientContentDocument, Project, ClientSuppliedContent, ClientContentWritten
 from django.contrib import admin
 
 
@@ -7,6 +7,6 @@ class ProjectAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(ClientContentWritten, ClientSuppliedContent)
+@admin.register(ClientContentWritten, ClientSuppliedContent, ClientContentDocument)
 class ClientContentAdmin(admin.ModelAdmin):
     pass
